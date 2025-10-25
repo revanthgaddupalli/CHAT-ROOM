@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat message", (data) => {
-    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const time = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true, timeZone: "Asia/Kolkata"});
     io.to(data.roomId).emit("chat message", {
       user: data.user,
       text: data.text,
