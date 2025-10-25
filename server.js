@@ -4,12 +4,16 @@ const socketIo = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 app.use(express.static("client"));
 
 io.on("connection", (socket) => {
-
   socket.on("set username", ({ username, roomId }) => {
     if (!username || !roomId) return;
     socket.username = username;
@@ -39,7 +43,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
