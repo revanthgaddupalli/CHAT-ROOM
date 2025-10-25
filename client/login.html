@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Chat App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">💬 Chat Room</div>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Enter your username" required />
+      <button type="submit">Enter Room</button>
+    </form>
+  </div>
+
+  <script>
+    function generateRoomId() {
+      return Math.floor(10000 + Math.random() * 90000); // 10000–99999
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomFromUrl = urlParams.get("room");
+
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      if (!username) return;
+
+      const roomId = roomFromUrl || generateRoomId();
+      sessionStorage.setItem("username", username);
+      sessionStorage.setItem("roomId", roomId);
+
+      window.location.href = `index.html?room=${roomId}`;
+    });
+  </script>
+</body>
+</html>
